@@ -7,22 +7,24 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CSVFileReader {
-    public void readCSV(String filepath) throws CsvValidationException, IOException {
+    public void displayHeaders(String filepath) throws CsvValidationException, IOException {
         try (CSVReader reader = new CSVReader(new FileReader(filepath))) {
-            String[] line;
-            int rowCount = 0;
             String[] headers = reader.readNext();
             if (headers != null) {
-                System.out.println("Columns: "+ String.join(",", headers));
+                System.out.println("Headers: " + String.join(", ", headers));
+            } else {
+                System.out.println("No headers found in the file.");
             }
-            while ((line = reader.readNext()) != null) {
-                rowCount++;
-                String.join(",", line);
-            }
+        }
+    }
 
-            System.out.println("Total rows: "+ rowCount+ ", Total columns: "+ headers.length );
-        } catch (CsvValidationException | IOException e) {
-            e.printStackTrace();
+    public void countRows(String filepath) throws CsvValidationException, IOException {
+        try (CSVReader reader = new CSVReader(new FileReader(filepath))) {
+            int rowCount = 0;
+            while (reader.readNext() != null) {
+                rowCount++;
+            }
+            System.out.println("Total rows: " + rowCount);
         }
     }
 }
