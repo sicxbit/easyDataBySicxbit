@@ -10,7 +10,7 @@ import com.sicxbit.utils.CSVFileReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        String filepath = null;
+        String filepath = "D:\\downloads\\test.csv";
 
         while (true) {
 
@@ -19,7 +19,8 @@ public class Main {
             System.out.println("2. Display Headers");
             System.out.println("3. Count Rows");
             System.out.println("4. Count Null values");
-            System.out.println("5. Exit");
+            System.out.println("5. debug ");
+            System.out.println("6. Close");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -32,7 +33,7 @@ public class Main {
                     File file = new File(filepath);
                     if (!file.exists()) {
                         System.out.println("Error: File does not exist. Please provide a valid path.");
-                        filepath = null; // Reset filepath
+                        filepath = null;
                     } else if (!filepath.endsWith(".csv")) {
                         System.out.println("Error: Please provide a valid CSV file.");
                         filepath = null;
@@ -70,16 +71,34 @@ public class Main {
                     break;
 
                 case 4:
-                    while (true){
-                        try{
+                    if (filepath == null) {
+                        System.out.println("Error: the csv file does not exist");
+                    } else {
+                        try {
                             CSVFileReader fileReader = new CSVFileReader();
                             fileReader.checkNullValues(filepath);
                         } catch (CsvValidationException e) {
                             throw new RuntimeException(e);
                         }
                     }
+                    break;
 
-
+                case 5:
+                    if (filepath == null) {
+                        System.out.println("Error: error finding the file");
+                    } else {
+                        try {
+                            CSVFileReader fileReader = new CSVFileReader();
+                            fileReader.debug(filepath);
+                        } catch (CsvValidationException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case 6:
+                    System.out.println("Exiting the program");
+                    scanner.close();
+                    return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }

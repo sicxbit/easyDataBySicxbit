@@ -10,6 +10,17 @@ import java.util.Map;
 
 
 public class CSVFileReader {
+    public void debug(String filepath) throws CsvValidationException, IOException{
+        try(CSVReader reader = new CSVReader(new FileReader(filepath))){
+            String[] firstRow = reader.readNext();
+            if (firstRow != null) {
+                System.out.println("Headers: " + String.join(", ", firstRow));
+            } else {
+                System.out.println("No headers found in the file.");
+            }
+
+        }
+    }
     public void checkNullValues(String filepath) throws CsvValidationException, IOException {
         try (CSVReader reader = new CSVReader(new FileReader(filepath))) {
             // Read headers
