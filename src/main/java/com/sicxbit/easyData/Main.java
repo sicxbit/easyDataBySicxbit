@@ -1,11 +1,14 @@
 package com.sicxbit.easyData;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
+
+import com.opencsv.exceptions.CsvValidationException;
 import com.sicxbit.utils.CSVFileReader;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         String filepath = null;
 
@@ -15,7 +18,8 @@ public class Main {
             System.out.println("1. Set CSV File Path");
             System.out.println("2. Display Headers");
             System.out.println("3. Count Rows");
-            System.out.println("4. Exit");
+            System.out.println("4. Count Null values");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
@@ -66,9 +70,15 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("Exiting the application. Goodbye!");
-                    scanner.close();
-                    return;
+                    while (true){
+                        try{
+                            CSVFileReader fileReader = new CSVFileReader();
+                            fileReader.checkNullValues(filepath);
+                        } catch (CsvValidationException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
 
                 default:
                     System.out.println("Invalid choice. Please try again.");
