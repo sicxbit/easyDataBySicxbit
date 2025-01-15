@@ -1,5 +1,5 @@
 
-#CSV Data Analysis App
+# CSV Data Analysis App
 
 A simple terminal-based application for analyzing CSV files. This app allows users to:
 
@@ -14,7 +14,7 @@ Count null values in each column.
 Debug CSV file structure.
 
 
-###Features
+### Features
 
 1. Set CSV File Path: Specify the path of the CSV file you want to analyze.
 
@@ -31,7 +31,7 @@ Debug CSV file structure.
 5. Debug Mode: Examine the raw data for debugging purposes.
 
 
-###How to Run
+### How to Run
 
 1. Clone the repository:
 
