@@ -35,22 +35,22 @@ Debug CSV file structure.
 
 1. Clone the repository:
 
-''' git clone https://github.com/sicxbit/easydata'''
+``` git clone https://github.com/sicxbit/easydata ```
 
 
 2. Navigate to the project directory:
 
-''' cd your-repo'''
+``` cd your-repo```
 
 
 3. Compile the project:
 
-''' javac -cp ".:path/to/opencsv.jar" com/sicxbit/easyData/Main.java'''
+``` javac -cp ".:path/to/opencsv.jar" com/sicxbit/easyData/Main.java```
 
 
 4. Run the project:
 
-''' java -cp ".:path/to/opencsv.jar" com.sicxbit.easyData.Main'''
+``` java -cp ".:path/to/opencsv.jar" com.sicxbit.easyData.Main```
 
 
 
@@ -63,14 +63,16 @@ OpenCSV library.
 
 Example Usage
 
-''' === CSV Data Analysis App ===
+```
+=== CSV Data Analysis App ===
 1. Set CSV File Path
 2. Display Headers
 3. Count Rows
 4. Count Null values
 5. Debug
 6. Exit
-Enter your choice:'''
+Enter your choice:
+```
 
 License
 
