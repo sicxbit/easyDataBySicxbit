@@ -52,6 +52,10 @@ public class CSVFileReader {
             for (Map.Entry<String, Integer> entry : nullCounts.entrySet()) {
                 System.out.println(entry.getKey() + ": " + entry.getValue() + " null(s)");
             }
+            boolean hasNull = nullCounts.values().stream().anyMatch(count -> count >0);
+            if (hasNull) {
+                System.out.println("This part of the code is working"); //debugging step
+            }
         } catch (CsvValidationException | IOException e) {
             System.out.println("Error reading the CSV file.");
             e.printStackTrace();
