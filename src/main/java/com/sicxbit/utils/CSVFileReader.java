@@ -33,13 +33,12 @@ public class CSVFileReader {
             #init map
             Map<String, Integer> nullCounts = new HashMap<>();
             for (String header : headers) {
-                nullCounts.put(header, 0); // Initialize counts to zero
+                nullCounts.put(header, 0); 
             }
 
             String[] row;
             while ((row = reader.readNext()) != null) {
                 for (int i = 0; i < headers.length; i++) {
-                    // Check if the current cell is null or empty
                     if (i >= row.length || row[i] == null || row[i].trim().isEmpty()) {
                         nullCounts.put(headers[i], nullCounts.get(headers[i]) + 1);
                     }
@@ -52,9 +51,13 @@ public class CSVFileReader {
                 System.out.println(entry.getKey() + ": " + entry.getValue() + " null(s)");
             }
             boolean hasNull = nullCounts.values().stream().anyMatch(count -> count >0);
+            boolean hasNull = nullCounts.values().stream().anyMatch(count -> count > 0);
             if (hasNull) {
-                System.out.println("This part of the code is working"); //debugging step
+                System.out.println("Null values have been replaced with: " + replacementValue);
+            } else {
+                System.out.println("No null values found.");
             }
+
         } catch (CsvValidationException | IOException e) {
             System.out.println("Error reading the CSV file.");
             e.printStackTrace();
