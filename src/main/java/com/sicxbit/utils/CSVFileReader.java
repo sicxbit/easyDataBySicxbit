@@ -33,7 +33,7 @@ public class CSVFileReader {
                 System.out.println("ERROR: The file is empty.");
                 return;
             }
-            //initialise map
+            //init mapping
             Map<String, Integer> nullCounts = new HashMap<>();
             for (String header : headers) {
                 nullCounts.put(header, 0);
@@ -71,7 +71,7 @@ public class CSVFileReader {
                     case 2:
                         System.out.print("Enter the value to replace the NA");
                         String replacementValue = scanner.nextLine();
-                        replacementWithValue(filepath, replacementValue);
+                        replaceValues(filepath, replacementValue);
                         break;
                     case 3:
                         System.out.println("Returning to main menu");
@@ -83,9 +83,16 @@ public class CSVFileReader {
             e.printStackTrace();
         }
     }
-    public void replacementWithValue(String filepath, String replacementValue) throws IOException, CsvValidationException {
+    public void replaceValues(String filepath, String replacementValue) throws IOException, CsvValidationException {
         File inputFile = new File(filepath);
         File tempFile = new File("temp.csv");
+
+        if (tempFile.exists()) {
+            if (!tempFile.delete()) {
+                System.out.println("Error: Could not delete existing temp file.");
+                return;
+            }
+        }
 
         try (CSVReader reader = new CSVReader(new FileReader(inputFile));
              CSVWriter writer = new CSVWriter(new FileWriter(tempFile))) {
@@ -96,7 +103,7 @@ public class CSVFileReader {
                 return;
             }
 
-            writer.writeNext(headers); // Write headers to the new file
+            writer.writeNext(headers);
 
             String[] row;
             int replacedCount = 0;
@@ -108,19 +115,34 @@ public class CSVFileReader {
                         replacedCount++;
                     }
                 }
-                writer.writeNext(row);
+                writer.writeNext(row); // Write the updated row to the new file
             }
 
             System.out.println("Replaced " + replacedCount + " null/empty values with '" + replacementValue + "'.");
 
-            // Replace the original file with the updated file
-            if (inputFile.delete()) {
-                if (!tempFile.renameTo(inputFile)) {
-                    System.out.println("Error: Could not rename temp file to original file.");
+            // Flush the writer to ensure all data is written to the file
+            writer.flush();
+
+        }
+
+        // Attempt to delete the original file
+        if (inputFile.delete()) {
+            // Rename the temp file to the original file name
+            if (!tempFile.renameTo(inputFile)) {
+                System.out.println("Error: Could not rename temp file to original file.");
+                // Attempt to restore the original file from a backup (if any)
+                if (inputFile.createNewFile()) {
+                    System.out.println("Created a new empty file as the original file could not be restored.");
+                } else {
+                    System.out.println("Failed to create a new file. Data may be lost.");
                 }
-            } else {
-                System.out.println("Error: Could not delete the original file.");
             }
+        } else {
+            System.out.println("Error: Could not delete the original file.");
+            // Provide additional debugging information
+            System.out.println("File path: " + inputFile.getAbsolutePath());
+            System.out.println("File exists: " + inputFile.exists());
+            System.out.println("File writable: " + inputFile.canWrite());
         }
     }
     public void displayHeaders(String filepath) throws CsvValidationException, IOException {
