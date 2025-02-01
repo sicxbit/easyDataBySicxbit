@@ -33,10 +33,10 @@ public class CSVFileReader {
                 System.out.println("ERROR: The file is empty.");
                 return;
             }
-
+            //initialise map
             Map<String, Integer> nullCounts = new HashMap<>();
             for (String header : headers) {
-                nullCounts.put(header, 0); // Initialize counts to zero
+                nullCounts.put(header, 0);
             }
 
             String[] row;

@@ -10,7 +10,7 @@ import com.sicxbit.utils.CSVFileReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        String filepath = "D:\\Downloads\\debug.csv"; // added for debugging, have to delete later
+        String filepath = "D:\\code\\dataAnalyser\\debug.csv"; // added for debugging, have to delete later
 
         while (true) {
 
